@@ -1,0 +1,34 @@
+{% extends "edit/edit_base.html" %}
+
+
+{% block header_script %}
+<script src="{{ url_for('static', filename='editor.md/zepto.min.js') }}"></script>
+<script src="{{ url_for('static', filename='editor.md/editormd.min.js') }}"></script>
+<script src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.min.js') }}"></script>
+
+    <script type="text/javascript">
+			var testEditor;
+			var jQuery = Zepto;
+
+            $(function() {
+                $.get("./", function(md){
+					testEditor = editormd("editormd", {
+						width  : "90%",
+						height : 720,
+						path   : '/static/editor.md/lib/'
+					});
+				});
+            });
+</script>
+
+{% endblock %}
+
+{% block title %}欢迎使用Tube{% endblock %}
+{% block page_header %}腾讯新闻{% endblock %}
+
+{% block body %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='editor.md/css/editormd.min.css') }}" />
+    <div id="editormd">
+        <textarea style="display:none;">### Hello Editor.md !</textarea>
+    </div>
+{% endblock %}

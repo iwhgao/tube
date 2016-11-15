@@ -1,0 +1,169 @@
+{% extends "welcome/welcome_base.html" %}
+{% block title %}欢迎使用{% endblock %}
+
+{% block header_script %}
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='pagepiling.js/jquery.pagepiling.min.css') }}"/>
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script type="text/javascript"
+            src="{{ url_for('static', filename='pagepiling.js/jquery.pagepiling.min.js') }}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#pagepiling').pagepiling({
+                menu: null,
+                direction: 'vertical',
+                verticalCentered: true,
+                sectionsColor: [],
+                anchors: [],
+                scrollingSpeed: 700,
+                easing: 'swing',
+                loopBottom: false,
+                loopTop: false,
+                css3: true,
+                navigation: {
+                    'textColor': '#f2f2f2',
+                    'bulletsColor': '#ccc',
+                    'position': 'right',
+                    'tooltips': ['第一页', '第二页', '第三页', '第四页']
+                },
+                normalScrollElements: null,
+                normalScrollElementTouchThreshold: 5,
+                touchSensitivity: 5,
+                keyboardScrolling: true,
+                sectionSelector: '.section',
+                animateAnchor: false,
+
+                //events
+                onLeave: function (index, nextIndex, direction) {
+                },
+                afterLoad: function (anchorLink, index) {
+                },
+                afterRender: function () {
+                },
+            });
+        });
+    </script>
+
+    <style>
+        /* Style for our header texts
+        * --------------------------------------- */
+        h1 {
+            font-size: 5em;
+            font-family: arial, helvetica;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Centered texts in each section
+        * --------------------------------------- */
+        .section {
+            text-align: center;
+        }
+
+        /* Backgrounds will cover all the section
+        * --------------------------------------- */
+        #section1,
+        #section2,
+        #section3 {
+            background-size: cover;
+        }
+
+        /* Defining each section background and styles
+        * --------------------------------------- */
+        #section1 {
+            background-image: url(/static/imgs/bg1.jpg);
+        }
+
+        #section2 {
+            background-image: url(/static/imgs/bg2.jpg);
+            padding: 6% 0 0 0;
+        }
+
+        #section3 {
+            background-image: url(/static/imgs/bg3.jpg);
+            padding: 6% 0 0 0;
+        }
+
+        #section3 h1 {
+            color: #000;
+        }
+
+        #section1 h1 {
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            top: 200px;
+            color: #fff;
+        }
+
+        #section2 .intro {
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            top: 30px;
+        }
+
+        #section2 h1 {
+            position: absolute;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            top: 200px;
+            color: #fff;
+        }
+
+        #section2 p {
+            text-shadow: 1px 5px 20px #000;
+        }
+
+        #section3 h1,
+        #section3 p {
+            text-shadow: 1px 5px 20px #000;
+            color: #fff;
+        }
+    </style>
+
+{% endblock %}
+
+{% block body %}
+    <div id="pagepiling">
+        <div class="section" id="section1">
+            <!-- /.col-lg-4 -->
+            <div class="col-lg-4"> </div>
+            <div class="col-lg-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <i class="fa fa-flask fa-5x" aria-hidden="true"></i>
+                        <h2>Tube——文档管理利器</h2>
+                    </div>
+                    <div class="panel-body">
+                        <p><i class="fa fa-chevron-circle-right fa-1x" aria-hidden="true"> 包含权限管理、目录排序、Markdown编辑器</i></p>
+                        <p><i class="fa fa-chevron-circle-right fa-1x" aria-hidden="true"> 包含权限管理、目录排序、Markdown编辑器</i></p>
+                        <p><i class="fa fa-chevron-circle-right fa-1x" aria-hidden="true"> 包含权限管理、目录排序、Markdown编辑器</i></p>
+                        <p><i class="fa fa-chevron-circle-right fa-1x" aria-hidden="true"> 包含权限管理、目录排序、Markdown编辑器</i></p>
+                    </div>
+                    <div class="panel-footer">
+                        <a href="http://www.iwhgao.com" target="_blank">@ www.iwhgao.com</a>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+                <button type="button" class="btn btn-primary btn-lg">登录</button>
+                <span>|</span>
+                <button type="button" class="btn btn-primary btn-lg">注册</button>
+            </div>
+            <div class="col-lg-4"> </div>
+
+
+        </div>
+        <div class="section" id="section2">
+        </div>
+        <div class="section" id="section3">
+        </div>
+    </div>
+{% endblock %}

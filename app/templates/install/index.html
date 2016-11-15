@@ -1,0 +1,70 @@
+{% extends "install/install_base.html" %}
+{% block title %}欢迎使用——Tube{% endblock %}
+{% block page_header %}腾讯新闻{% endblock %}
+
+{% block header_script %}
+    <script language="javascript">
+    function submitForm()
+    {
+        document.msform.submit;
+    }
+    </script>
+{% endblock %}
+
+{% block body_content %}
+    <div>
+        <form id="msform" name="msform" method="get" action="/home">
+            <!-- progressbar -->
+            <ul id="progressbar">
+                <li class="active">第一步</li>
+                <li>第二步</li>
+                <li>第三步</li>
+                <li>第四步</li>
+            </ul>
+            <!-- fieldsets -->
+            <fieldset>
+                <h2 class="fs-title">安装协议</h2>
+                <h3 class="fs-subtitle">请仔细阅读下面的协议</h3>
+                <textarea name="protocol" rows="15" cols="20" readonly="readonly">Copyright (C) <2016> <Wenhui Gao @ www.iwhgao.com>
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+                </textarea>
+                <input type="button" name="next" class="next action-button" value="下一步"/>
+            </fieldset>
+            <fieldset>
+                <h2 class="fs-title">系统检查</h2>
+                <h3 class="fs-subtitle">检查必需模块是否安装</h3>
+                {% for m in modules.keys() %}
+                    <li>{{ m }} : {{ modules.get(m) }}</li>
+                {% endfor %}
+                <input type="button" name="previous" class="previous action-button" value="上一步"/>
+                <input type="button" name="next" class="next action-button" value="下一步"/>
+            </fieldset>
+            <fieldset>
+                <h2 class="fs-title">数据库设置</h2>
+                <h3 class="fs-subtitle">设置Mysql数据库连接参数</h3>
+                <input type="text" name="mysql_host" placeholder="数据库IP递增"/>
+                <input type="text" name="mysql_port" placeholder="数据库端口"/>
+                <input type="text" name="mysql_user" placeholder="数据库用户名"/>
+                <input type="password" name="mysql_pass" placeholder="数据库密码"/>
+                <input type="password" name="mysql_cpass" placeholder="再次输入数据库密码"/>
+                <input type="text" name="mysql_db" placeholder="数据库名"/>
+                <input type="button" name="previous" class="previous action-button" value="上一步"/>
+                <input type="button" name="next" class="next action-button" value="下一步"/>
+            </fieldset>
+            <fieldset>
+                <h2 class="fs-title">系统管理员设置</h2>
+                <h3 class="fs-subtitle">设置超级管理员帐号</h3>
+                <input type="text" name="super_name" placeholder="超级管理员用户名"/>
+                <input type="text" name="super_password" placeholder="超级管理员密码"/>
+                <input type="text" name="email" placeholder="电子邮箱地址"/>
+                <input type="button" name="previous" class="previous action-button" value="上一步"/>
+                <input type="submit" name="submit" class="submit action-button" value="开始安装" onclick="alert('Pressed');"/>
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}
