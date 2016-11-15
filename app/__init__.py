@@ -1,21 +1,24 @@
+#!/usr/bin/python
+# -*- coding:utf-8 -*-
+
+"""
+@version: v1.0.0
+@author: deangao 
+@license: Apache Licence 
+@contact: gaowenhui2012@gmail.com
+@site: www.iwhgao.com
+@file: __init__.py.py
+@time: 2016/9/14 22:03
+"""
+
+import MySQLdb
 from flask import Flask
-from flask.ext.bootstrap import Bootstrap
-from flask.ext.mail import Mail
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.moment import Moment
-from flask.ext.pagedown import PageDown
-from flask.ext.login import LoginManager
-from config import config
+from .config import config
 
-bootstrap = Bootstrap()
-mail = Mail()
-db = SQLAlchemy()
-moment = Moment()
-pagedown = PageDown()
 
-login_manager = LoginManager()
-login_manager.session_protection = 'strong'
-login_manager.login_view = 'auth.login'
+# 打开数据库连接
+db = MySQLdb.connect('localhost', 'root', '', 'tube')
+cursor = db.cursor()
 
 
 def create_app(config_name):
@@ -23,24 +26,28 @@ def create_app(config_name):
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
 
-    bootstrap.init_app(app)
-    db.init_app(app)
-    login_manager.init_app(app)
-    mail.init_app(app)
-    moment.init_app(app)
-    pagedown.init_app(app)
+    # 欢迎页面
+    from .welcome import wlc as welcome_blueprint
+    app.register_blueprint(welcome_blueprint, url_prefix='/')
 
-    if not app.debug and not app.testing and not app.config['SSL_DISABLE']:
-        from flask.ext.sslify import SSLify
-        sslify = SSLify(app)
-
-    from .admin import admin as admin_blueprint
-    app.register_blueprint(admin_blueprint)
-
+    # 主页面
     from .home import home as home_blueprint
-    app.register_blueprint(home_blueprint)
+    app.register_blueprint(home_blueprint, url_prefix='/home')
 
-    from .auth import auth as auth_blueprint
-    app.register_blueprint(auth_blueprint)
+    # 编辑界面
+    from .edit import edit as edit_blueprint
+    app.register_blueprint(edit_blueprint, url_prefix='/edit')
+
+    # 后台管理页面
+    from .admin import admin as admin_blueprint
+    app.register_blueprint(admin_blueprint, url_prefix='/admin')
+
+    # 安装页面
+    from .install import install as install_blueprint
+    app.register_blueprint(install_blueprint, url_prefix='/install')
+
+    # 注册页面
+    from .register import register as register_blueprint
+    app.register_blueprint(register_blueprint, url_prefix='/register')
 
     return app

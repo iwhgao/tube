@@ -1,0 +1,8 @@
+# pycharm
+/.idea
+
+# eclipse
+/.project
+/.metadata
+/.classpath
+/.settings

@@ -291,7 +291,7 @@ var requirejs, require, define;
                     trimDots(name);
 
                     //Some use of packages may use a . path to reference the
-                    //'admin' module name, so normalize for that.
+                    //'main' module name, so normalize for that.
                     pkgConfig = getOwn(config.pkgs, (pkgName = name[0]));
                     name = name.join('/');
                     if (pkgConfig && name === pkgName + '/' + pkgConfig.main) {
@@ -583,7 +583,7 @@ var requirejs, require, define;
                             var c,
                                 pkg = getOwn(config.pkgs, mod.map.id);
                             // For packages, only support config targeted
-                            // at the admin module.
+                            // at the main module.
                             c = pkg ? getOwn(config.config, mod.map.id + '/' + pkg.main) :
                                       getOwn(config.config, mod.map.id);
                             return  c || {};
@@ -1306,7 +1306,7 @@ var requirejs, require, define;
                         pkgs[pkgObj.name] = {
                             name: pkgObj.name,
                             location: location || pkgObj.name,
-                            //Remove leading dot in admin, so admin paths are normalized,
+                            //Remove leading dot in main, so main paths are normalized,
                             //and remove any trailing .js, since different package
                             //envs have different conventions: some use a module name,
                             //some use a file name.
@@ -1596,7 +1596,7 @@ var requirejs, require, define;
                             break;
                         } else if (pkg) {
                             //If module name is just the package name, then looking
-                            //for the admin module.
+                            //for the main module.
                             if (moduleName === pkg.name) {
                                 pkgPath = pkg.location + '/' + pkg.main;
                             } else {
@@ -1917,7 +1917,7 @@ var requirejs, require, define;
         return interactiveScript;
     }
 
-    //Look for a data-admin script attribute, which could also adjust the baseUrl.
+    //Look for a data-main script attribute, which could also adjust the baseUrl.
     if (isBrowser) {
         //Figure out baseUrl. Get it from the script tag with require.js in it.
         eachReverse(scripts(), function (script) {
@@ -1927,17 +1927,17 @@ var requirejs, require, define;
                 head = script.parentNode;
             }
 
-            //Look for a data-admin attribute to set admin script for the page
-            //to load. If it is there, the path to data admin becomes the
+            //Look for a data-main attribute to set main script for the page
+            //to load. If it is there, the path to data main becomes the
             //baseUrl, if it is not already set.
-            dataMain = script.getAttribute('data-admin');
+            dataMain = script.getAttribute('data-main');
             if (dataMain) {
                 //Preserve dataMain in case it is a path (i.e. contains '?')
                 mainScript = dataMain;
 
                 //Set final baseUrl if there is not already an explicit one.
                 if (!cfg.baseUrl) {
-                    //Pull off the directory of data-admin for use as the
+                    //Pull off the directory of data-main for use as the
                     //baseUrl.
                     src = mainScript.split('/');
                     mainScript = src.pop();
@@ -1955,7 +1955,7 @@ var requirejs, require, define;
                     mainScript = dataMain;
                 }
 
-                //Put the data-admin script in the files to load.
+                //Put the data-main script in the files to load.
                 cfg.deps = cfg.deps ? cfg.deps.concat(mainScript) : [mainScript];
 
                 return true;

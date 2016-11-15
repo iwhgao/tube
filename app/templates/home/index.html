@@ -1,2 +1,11 @@
-{% extends "base.html" %}
+{% extends "home/home_base.html" %}
+{% block title %}Netshadow{% endblock %}
+{% block page_header %}腾讯新闻{% endblock %}
 
+{% block content %}
+  {% for entry in res %}
+    <li><h2>{{ entry}}</h2></li>
+  {% else %}
+    <li><em>Unbelievable.  No entries here so far</em></li>
+  {% endfor %}
+{% endblock %}

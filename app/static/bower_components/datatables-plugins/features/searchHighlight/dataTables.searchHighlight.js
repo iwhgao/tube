@@ -14,7 +14,7 @@
  * License      MIT - http://datatables.net/license/mit
  *
  * This feature plug-in for DataTables will highlight search terms in the
- * DataTable as they are entered into the admin search input element, or via the
+ * DataTable as they are entered into the main search input element, or via the
  * `search()` API method.
  *
  * It depends upon the jQuery Highlight plug-in by Bartek Szopka:
