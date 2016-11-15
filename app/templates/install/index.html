@@ -1,19 +1,21 @@
 {% extends "install/install_base.html" %}
 {% block title %}欢迎使用——Tube{% endblock %}
-{% block page_header %}腾讯新闻{% endblock %}
 
 {% block header_script %}
+    <link href="{{ url_for('static', filename='bower_components/font-awesome/css/font-awesome.min.css') }}"
+          rel="stylesheet" type="text/css">
+
     <script language="javascript">
     function submitForm()
     {
-        document.msform.submit;
+        document.getElementById("msform").submit();
     }
     </script>
 {% endblock %}
 
 {% block body_content %}
     <div>
-        <form id="msform" name="msform" method="get" action="/home">
+        <form id="msform" name="msform" method="post" action="start_install">
             <!-- progressbar -->
             <ul id="progressbar">
                 <li class="active">第一步</li>
@@ -39,16 +41,23 @@
                 <h2 class="fs-title">系统检查</h2>
                 <h3 class="fs-subtitle">检查必需模块是否安装</h3>
                 {% for m in modules.keys() %}
-                    <li>{{ m }} : {{ modules.get(m) }}</li>
+                    {% if modules.get(m) %}
+                        <i class="fa fa-check-circle" aria-hidden="true"></i> {{ m }}
+                    {% else %}
+                        <i class="fa fa-times-circle" aria-hidden="true"></i> {{ m }}
+                    {% endif %}
                 {% endfor %}
+                <br/>
+                <br/>
+                <br/>
                 <input type="button" name="previous" class="previous action-button" value="上一步"/>
                 <input type="button" name="next" class="next action-button" value="下一步"/>
             </fieldset>
             <fieldset>
                 <h2 class="fs-title">数据库设置</h2>
                 <h3 class="fs-subtitle">设置Mysql数据库连接参数</h3>
-                <input type="text" name="mysql_host" placeholder="数据库IP递增"/>
-                <input type="text" name="mysql_port" placeholder="数据库端口"/>
+                <input type="text" name="mysql_host" placeholder="数据库IP递增" required="required"/>
+                <input type="text" name="mysql_port" placeholder="数据库端口" required="required"/>
                 <input type="text" name="mysql_user" placeholder="数据库用户名"/>
                 <input type="password" name="mysql_pass" placeholder="数据库密码"/>
                 <input type="password" name="mysql_cpass" placeholder="再次输入数据库密码"/>
@@ -63,7 +72,7 @@
                 <input type="text" name="super_password" placeholder="超级管理员密码"/>
                 <input type="text" name="email" placeholder="电子邮箱地址"/>
                 <input type="button" name="previous" class="previous action-button" value="上一步"/>
-                <input type="submit" name="submit" class="submit action-button" value="开始安装" onclick="alert('Pressed');"/>
+                <input type="submit" name="install_submit" class="submit action-button" value="开始安装" onclick="submitForm()"/>
             </fieldset>
         </form>
     </div>

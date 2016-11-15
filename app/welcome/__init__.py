@@ -16,6 +16,7 @@ from jinja2 import TemplateNotFound
 
 wlc = Blueprint('welcome', __name__)
 
+
 @wlc.route('/')
 @wlc.route('/index')
 def welcome():

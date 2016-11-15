@@ -1,0 +1,33 @@
+{% extends "install/install_base.html" %}
+{% block title %}欢迎使用——Tube{% endblock %}
+
+{% block header_script %}
+    <!-- Custom Fonts -->
+    <link href="{{ url_for('static', filename='bower_components/font-awesome/css/font-awesome.min.css') }}"
+          rel="stylesheet" type="text/css">
+    <script language="javascript">
+        function enter_dashboard() {
+            window.location.href='/admin/index'
+        }
+
+        function enter_projecthome() {
+            window.location.href='/admin/project'
+        }
+    </script>
+{% endblock %}
+
+{% block body_content %}
+    <div>
+        <form id="msform" name="msform">
+            <fieldset>
+                <i class="fa fa-smile-o fa-2x" aria-hidden="true"></i>
+                <br/>
+                <br/>
+                <h2 class="fs-title">系统安装成功！</h2>
+                <br/>
+                <input type="button" name="dashboard" class="action-button" value="进入管理面板" onclick="enter_dashboard()"/>
+                <input type="button" name="projecthome" class="action-button" value="进入项目主页" onclick="enter_projecthome()"/>
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}

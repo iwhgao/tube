@@ -18,8 +18,8 @@ from .. import cursor
 home = Blueprint('home', __name__)
 
 
-@home.route('/')
-def show():
+@home.route('/', methods=['GET', 'POST'])
+def index():
 	try:
 		cursor.execute('SHOW DATABASES')
 		res = cursor.fetchall()
