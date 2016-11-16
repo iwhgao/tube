@@ -14,6 +14,7 @@
 from flask import Flask
 from .config import config
 from flask_sqlalchemy import SQLAlchemy
+import MySQLdb
 
 db = SQLAlchemy()
 
