@@ -11,20 +11,21 @@
 @time: 2016/9/14 22:03
 """
 
-import MySQLdb
 from flask import Flask
 from .config import config
+from flask_sqlalchemy import SQLAlchemy
 
-
-# 打开数据库连接
-db = MySQLdb.connect('localhost', 'root', '', 'tube')
-cursor = db.cursor()
+db = SQLAlchemy()
 
 
 def create_app(config_name):
+    """创建Application"""
+
     app = Flask(__name__)
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
+
+    db = SQLAlchemy(app)
 
     # 欢迎页面
     from .welcome import wlc as welcome_blueprint

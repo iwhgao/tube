@@ -17,6 +17,8 @@ class Config:
 	MYSQL_PASSWORD = ''
 	MYSQL_DB = 'tube'
 
+	SQLALCHEMY_DATABASE_URI = 'mysql://%s:%s@%s/%s?charset=utf8' % (MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_DB)
+
 	@staticmethod
 	def init_app(app):
 		pass

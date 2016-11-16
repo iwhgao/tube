@@ -13,7 +13,7 @@
 
 from flask import Blueprint, render_template, abort
 from jinja2 import TemplateNotFound
-from .. import cursor
+from .. import db
 
 home = Blueprint('home', __name__)
 
@@ -21,9 +21,7 @@ home = Blueprint('home', __name__)
 @home.route('/', methods=['GET', 'POST'])
 def index():
 	try:
-		cursor.execute('SHOW DATABASES')
-		res = cursor.fetchall()
-
+		res = db.session.execute('show databases').fetchall()
 		return render_template('home/index.html', res=res)
 	except TemplateNotFound:
 		abort(404)
