@@ -6,10 +6,22 @@
           rel="stylesheet" type="text/css">
 
     <script language="javascript">
-    function submitForm()
-    {
-        document.getElementById("msform").submit();
-    }
+        function submitForm() {
+            document.getElementById("msform").submit();
+        }
+
+        function check_pwd() {
+            var pw1 = document.getElementsByName("super_password")[0].value;
+            var pw2 = document.getElementsByName("super_cpassword")[0].value;
+            if (pw1 == pw2 && pw2.length != 0) {
+                document.getElementById("promt").innerHTML="";
+                document.getElementsByName("install_submit")[0].disabled = false;
+            }
+            else {
+                document.getElementById("promt").innerHTML="<i class=\"fa fa-warning\" aria-hidden=\"true\"></i> <font color='red'>密码不相同或者为空</font>";
+                document.getElementsByName("install_submit")[0].disabled = true;
+            }
+        }
     </script>
 {% endblock %}
 
@@ -27,7 +39,8 @@
             <fieldset>
                 <h2 class="fs-title">安装协议</h2>
                 <h3 class="fs-subtitle">请仔细阅读下面的协议</h3>
-                <textarea name="protocol" rows="15" cols="20" readonly="readonly">Copyright (C) <2016> <Wenhui Gao @ www.iwhgao.com>
+                <textarea name="protocol" rows="15" cols="20" readonly="readonly">Copyright (C) <2016> <Wenhui Gao @
+                                                                                                               www.iwhgao.com>
 
     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -60,7 +73,6 @@
                 <input type="text" name="mysql_port" placeholder="数据库端口" required="required"/>
                 <input type="text" name="mysql_user" placeholder="数据库用户名"/>
                 <input type="password" name="mysql_pass" placeholder="数据库密码"/>
-                <input type="password" name="mysql_cpass" placeholder="再次输入数据库密码"/>
                 <input type="text" name="mysql_db" placeholder="数据库名"/>
                 <input type="button" name="previous" class="previous action-button" value="上一步"/>
                 <input type="button" name="next" class="next action-button" value="下一步"/>
@@ -69,10 +81,15 @@
                 <h2 class="fs-title">系统管理员设置</h2>
                 <h3 class="fs-subtitle">设置超级管理员帐号</h3>
                 <input type="text" name="super_name" placeholder="超级管理员用户名"/>
-                <input type="text" name="super_password" placeholder="超级管理员密码"/>
                 <input type="text" name="email" placeholder="电子邮箱地址"/>
+                <input type="text" name="super_password" placeholder="超级管理员密码"/>
+                <input type="text" name="super_cpassword" placeholder="再次输入管理员密码" onkeyup="check_pwd()"/>
+                <span id="promt"></span>
+                <br/>
+                <br/>
                 <input type="button" name="previous" class="previous action-button" value="上一步"/>
-                <input type="submit" name="install_submit" class="submit action-button" value="开始安装" onclick="submitForm()"/>
+                <input type="submit" name="install_submit" class="submit action-button" value="开始安装"
+                       onclick="submitForm()"/>
             </fieldset>
         </form>
     </div>

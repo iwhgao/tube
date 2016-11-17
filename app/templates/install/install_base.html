@@ -3,6 +3,8 @@
 <head>
     {% block head %}
         <meta charset="UTF-8">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='imgs/favicon.ico') }}">
+
         <link rel="stylesheet" media="screen" href="{{ url_for('static', filename='css/install-step-by-step.css') }}" />
         <title>{% block title %}{% endblock %}</title>
         {% block header_script %}{% endblock %}

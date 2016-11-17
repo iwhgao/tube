@@ -17,7 +17,7 @@ class Config:
 	MYSQL_PASSWORD = ''
 	MYSQL_DB = 'tube'
 
-	SQLALCHEMY_DATABASE_URI = 'mysql+mysqldb://%s:%s@%s/%s?charset=utf8' % (MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_DB)
+	SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://%s:%s@%s/%s?charset=utf8' % (MYSQL_USER, MYSQL_PASSWORD, MYSQL_HOST, MYSQL_DB)
 	SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 	@staticmethod

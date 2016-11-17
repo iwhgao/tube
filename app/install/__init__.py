@@ -65,21 +65,16 @@ def index():
 
 
 def install_step1():
-	"""sdfdfsd"""
+	"""创建表"""
 	pass
 
 
 def install_step2():
-	"""sdfdfsd"""
+	"""创建超级用户"""
 	pass
 
 
 def install_step3():
-	"""sdfdfsd"""
-	pass
-
-
-def install_step4():
 	"""创建install.lock文件"""
 
 	f = open(os.path.join(basedir, 'public', 'install.lock'), 'w')
@@ -91,7 +86,9 @@ def installing():
 	"""逐步安装"""
 
 	try:
-		install_step4()
+		install_step1()
+		install_step2()
+		install_step3()
 	except Exception, e:
 		return render_template('install/error.html', errors=e)
 
