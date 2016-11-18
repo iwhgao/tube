@@ -12,9 +12,11 @@
 """
 
 import os
+
 from flask import Blueprint, render_template, abort
 from jinja2 import TemplateNotFound
 from sqlalchemy.exc import ProgrammingError
+
 from .. import db
 
 home = Blueprint('home', __name__)
@@ -26,19 +28,18 @@ def execute_sql_file(sql_file_path):
 	"""执行sql文件"""
 
 	try:
-		with open(sql_file_path, 'r') as f:
-			for line in f:
-				line = line.strip()
-				if line:
-					db.session.execute(line)
+		f = open(sql_file_path, 'r')
+		line = f.read()
+		f.close()
+		db.session.execute(line)
 	except ProgrammingError, e:
-		print e
+		print 'dddd %s' % e
 
 
 @home.route('/', methods=['GET', 'POST'])
 def index():
 	try:
-		res = db.session.execute('show databases').fetchall()
+		res = db.session.execute('show tables;').fetchall()
 
 		execute_sql_file(os.path.join(basedir, 'public', 'database', 'db_init.sql'))
 
