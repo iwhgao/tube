@@ -12,12 +12,34 @@
 """
 
 import os
+import sys
+import datetime
 from flask import Blueprint, render_template, abort, request
 from jinja2 import TemplateNotFound
+from sqlalchemy.exc import ProgrammingError
+from .. import db
+
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 install = Blueprint('install', __name__)
 
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+
+def execute_sql_file(sql_file_path):
+	"""执行sql文件"""
+
+	try:
+		f = open(sql_file_path, 'r')
+		line = f.read()
+		f.close()
+		db.session.execute(line)
+		db.session.commit()
+	except ProgrammingError, e:
+		db.session.rollback()
+	finally:
+		db.session.close()
 
 
 def check_is_installed():
@@ -66,12 +88,28 @@ def index():
 
 def install_step1():
 	"""创建表"""
-	pass
+	execute_sql_file(os.path.join(basedir, 'public', 'database', 'db_init.sql'))
 
 
 def install_step2():
 	"""创建超级用户"""
-	pass
+
+	# 检查是否是第一次插入
+	cmd = 'SELECT COUNT(*) FROM `tube_group` WHERE `parent_group_id`=-1'
+	res = db.session.execute(cmd).fetchall()
+
+	if res[0][0] != 0:
+		raise Exception('已经安装过了!!!')
+
+	try:
+		dt = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+		cmd = 'INSERT INTO `tube_group`(`parent_group_id`, `group_name`, `group_description`, `create_time`) VALUES (%d, "%s", "%s", "%s");' % (-1, 'admin', 'admin', dt)
+		db.session.execute(cmd)
+		db.session.commit()
+	except ProgrammingError, e:
+		db.session.rollback()
+	finally:
+		db.session.close()
 
 
 def install_step3():
