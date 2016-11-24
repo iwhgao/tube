@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `tube_page`(
   `page_title`  VARCHAR(100)  NOT NULL COMMENT '',
   `page_content`  TEXT  NOT NULL COMMENT '',
   `sort_no` BIGINT  NOT NULL DEFAULT 0  COMMENT '',
-  `create_time` DATETIME  DEFAULT NULL COMMENT '',
+  `create_time` DATETIME  DEFAULT NULL COMMENT ''
 );
 
 
@@ -110,5 +110,5 @@ CREATE TABLE IF NOT EXISTS `tube_template`(
   `template_title`  VARCHAR(100)  NOT NULL COMMENT '',
   `template_content`  TEXT  NOT NULL COMMENT '',
   `create_time` DATETIME  DEFAULT NULL COMMENT '',
-  `last_update_time`  DATETIME  DEFAULT NULL COMMENT '',
+  `last_update_time`  DATETIME  DEFAULT NULL COMMENT ''
 );
