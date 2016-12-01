@@ -2,6 +2,7 @@ USE `tube`;
 
 CREATE TABLE IF NOT EXISTS `tube_user`(
   `user_id`  BIGINT  NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '',
+  `user_code`  VARCHAR(64)  NOT NULL COMMENT '',
   `user_name` VARCHAR(64)  NOT NULL COMMENT '',
   `group_id`  BIGINT  NOT NULL DEFAULT 0 COMMENT '',
   `password`  VARCHAR(64) NOT NULL COMMENT '',
@@ -10,16 +11,19 @@ CREATE TABLE IF NOT EXISTS `tube_user`(
   `create_time` DATETIME  DEFAULT NULL COMMENT '',
   `login_time`  DATETIME  DEFAULT NULL COMMENT '',
   `last_login_time`  DATETIME  DEFAULT NULL COMMENT '',
-  `login_times` BIGINT  DEFAULT 0 COMMENT ''
-);
+  `login_times` BIGINT  DEFAULT 1 COMMENT '',
+  UNIQUE KEY `user_code`(`user_code`)
+)DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE IF NOT EXISTS `tube_role`(
   `role_id`  BIGINT  NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '',
+  `role_code`  VARCHAR(64)  NOT NULL COMMENT '',
   `role_name`  VARCHAR(64)  NOT NULL COMMENT '',
   `role_description`  VARCHAR(200)  DEFAULT NULL COMMENT '',
-  `create_time` DATETIME  DEFAULT NULL COMMENT ''
-);
+  `create_time` DATETIME  DEFAULT NULL COMMENT '',
+  UNIQUE KEY `role_code`(`role_code`)
+)DEFAULT CHARSET=utf8;
 
 
 
@@ -29,15 +33,17 @@ CREATE TABLE IF NOT EXISTS `tube_group`(
   `group_name`  VARCHAR(64)  NOT NULL COMMENT '',
   `group_description`  VARCHAR(200)  DEFAULT NULL COMMENT '',
   `create_time` DATETIME  DEFAULT NULL COMMENT ''
-);
+)DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE IF NOT EXISTS `tube_right`(
   `right_id`  BIGINT  NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '',
+  `right_code`  VARCHAR(64)  NOT NULL COMMENT '',
   `right_name`  VARCHAR(64) NOT NULL COMMENT '',
   `right_description` VARCHAR(200)  DEFAULT NULL COMMENT '',
-  `create_time` DATETIME  DEFAULT NULL COMMENT  ''
-);
+  `create_time` DATETIME  DEFAULT NULL COMMENT  '',
+  UNIQUE KEY `right_code`(`right_code`)
+)DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE IF NOT EXISTS `tube_role_right`(
@@ -45,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `tube_role_right`(
   `role_id` BIGINT  NOT NULL COMMENT '',
   `right_id`  BIGINT  NOT NULL COMMENT '',
   `status`  INT NOT NULL DEFAULT 0 COMMENT ''
-);
+)DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE IF NOT EXISTS `tube_group_right`(
@@ -53,32 +59,32 @@ CREATE TABLE IF NOT EXISTS `tube_group_right`(
   `group_id`  BIGINT  NOT NULL COMMENT '',
   `right_id`  BIGINT  NOT NULL COMMENT '',
   `status`  INT NOT NULL DEFAULT 0 COMMENT ''
-);
+)DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `tube_project`(
-  `project_id`  BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '',
+  `project_id`  BIGINT  NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '',
   `project_name` VARCHAR(100) NOT NULL COMMENT '',
   `project_description` VARCHAR(200) DEFAULT NULL COMMENT '',
   `user_id` BIGINT NOT NULL COMMENT '',
   `user_name` VARCHAR(64) COMMENT '',
   `create_time` DATETIME  DEFAULT NULL COMMENT '',
   `last_update_time`  DATETIME  DEFAULT NULL COMMENT ''
-);
+)DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `tube_project_right_code`(
   `project_right_code`  INT NOT NULL COMMENT '',
   `project_right_name`  VARCHAR(64) NOT NULL COMMENT '',
   `project_right_description` VARCHAR(100)  NOT NULL COMMENT ''
-);
+)DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `tube_project_member`(
-  `project_member_id` BIGINT  NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '',
+  `id` BIGINT  NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '',
   `project_id`  BIGINT NOT NULL COMMENT '',
   `user_id` BIGINT  NOT NULL COMMENT '',
   `user_name` VARCHAR(64) NOT NULL COMMENT '',
   `create_time` DATETIME  NOT NULL COMMENT '',
   `project_right_code`  VARCHAR(16) NOT NULL DEFAULT '0'  COMMENT ''
-);
+)DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `tube_catalog`(
   `catalog_id`  BIGINT  NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '',
@@ -88,11 +94,11 @@ CREATE TABLE IF NOT EXISTS `tube_catalog`(
   `create_time` DATETIME  DEFAULT NULL COMMENT '',
   `last_update_time`  DATETIME  DEFAULT NULL COMMENT '',
   `parent_catalog_id`  BIGINT  NOT NULL DEFAULT 0 COMMENT ''
-);
+)DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE IF NOT EXISTS `tube_page`(
-  `page_id` BIGINT  NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '',
+  `id`  BIGINT  NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '',
   `creator_user_id` BIGINT  NOT NULL COMMENT '',
   `creator_user_name` VARCHAR(64) NOT NULL COMMENT '',
   `project_id`  BIGINT  NOT NULL COMMENT '',
@@ -101,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `tube_page`(
   `page_content`  TEXT  NOT NULL COMMENT '',
   `sort_no` BIGINT  NOT NULL DEFAULT 0  COMMENT '',
   `create_time` DATETIME  DEFAULT NULL COMMENT ''
-);
+)DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE IF NOT EXISTS `tube_template`(
@@ -111,4 +117,4 @@ CREATE TABLE IF NOT EXISTS `tube_template`(
   `template_content`  TEXT  NOT NULL COMMENT '',
   `create_time` DATETIME  DEFAULT NULL COMMENT '',
   `last_update_time`  DATETIME  DEFAULT NULL COMMENT ''
-);
+)DEFAULT CHARSET=utf8;

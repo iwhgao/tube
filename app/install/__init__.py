@@ -17,6 +17,7 @@ import datetime
 from flask import Blueprint, render_template, abort, request
 from jinja2 import TemplateNotFound
 from sqlalchemy.exc import ProgrammingError
+from hashlib import md5
 from .. import db
 
 reload(sys)
@@ -53,8 +54,7 @@ def check_is_installed():
 @install.route('/')
 @install.route('/index')
 def index():
-
-	#need_modules = ['', some]
+	# need_modules = ['', some]
 	install_modules = {}
 
 	try:
@@ -68,16 +68,16 @@ def index():
 		try:
 			# TODO： 检测各版本是否准确安装
 			import MySQLdb
-			install_modules.update({'MySQLdb':True})
+			install_modules.update({'MySQLdb': True})
 		except ImportError:
-			install_modules.update({'MySQLdb':False})
+			install_modules.update({'MySQLdb': False})
 			pass
 
 		try:
 			import MySQL
-			install_modules.update({'MySQL':True})
+			install_modules.update({'MySQL': True})
 		except ImportError:
-			install_modules.update({'MySQL':False})
+			install_modules.update({'MySQL': False})
 			pass
 
 		return render_template('install/index.html', modules=install_modules)
@@ -91,7 +91,7 @@ def install_step1():
 	execute_sql_file(os.path.join(basedir, 'public', 'database', 'db_init.sql'))
 
 
-def install_step2():
+def install_step2(pwd, email):
 	"""创建超级用户"""
 
 	# 检查是否是第一次插入
@@ -99,13 +99,26 @@ def install_step2():
 	res = db.session.execute(cmd).fetchall()
 
 	if res[0][0] != 0:
+		db.session.close()
 		raise Exception('已经安装过了!!!')
 
 	try:
+		# 创建组
 		dt = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-		cmd = 'INSERT INTO `tube_group`(`parent_group_id`, `group_name`, `group_description`, `create_time`) VALUES (%d, "%s", "%s", "%s");' % (-1, 'admin', 'admin', dt)
+		cmd = 'INSERT INTO `tube_group`(`parent_group_id`, `group_name`, `group_description`, `create_time`) VALUES (%d, "%s", "%s", "%s");' % (
+			-1, 'admin', 'admin', dt)
 		db.session.execute(cmd)
 		db.session.commit()
+
+		# 创建用户
+		m = md5()
+		m.update(pwd + "just a secret!")
+		encode_pwd = m.hexdigest()
+		cmd = 'INSERT INTO `tube_user`(`user_code`, `user_name`, `group_id`, `password`, `email`, `create_time`, `login_time`, `last_login_time`, `login_times`) VALUES ("superadmin", "%s", 1, "%s", "%s", "%s", "%s", 1)' % (
+			"超级管理员", email, encode_pwd, dt, dt, dt)
+		db.session.execute(cmd)
+		db.session.commit()
+
 	except ProgrammingError, e:
 		db.session.rollback()
 	finally:
@@ -125,10 +138,10 @@ def installing():
 
 	try:
 		install_step1()
-		install_step2()
+		install_step2(request.form['super_password'], request.form['email'])
 		install_step3()
 	except Exception, e:
 		return render_template('install/error.html', errors=e)
 
-	#print request.form
+	# print request.form
 	return render_template('install/start_install.html', install_info=None)
