@@ -6,10 +6,10 @@ class Config:
 	def __init__(self):
 		pass
 
-	SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
+	SECRET_KEY = 'hard to guess string'
 	SSL_DISABLE = False
 	DEBUG = True
-	FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
+	FLASK_ADMIN = 'gaowenhui2009@aliyun.com'
 
 	MYSQL_HOST = 'localhost'
 	MYSQL_PORT = 3306
@@ -35,6 +35,5 @@ class ProductionConfig(Config):
 
 
 config = {
-	'FLASK_ADMIN': 'gaowenhui2009@aliyun.com',
 	'default': ProductionConfig
 }

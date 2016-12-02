@@ -3,11 +3,11 @@
 
 {% block header_script %}
     <link rel="stylesheet" type="text/css"
-          href="{{ url_for('static', filename='pagepiling.js/jquery.pagepiling.min.css') }}"/>
+          href="{{ url_for('static', filename='plugins/pagepiling.js/jquery.pagepiling.min.css') }}"/>
     <script type="text/javascript"
-            src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.min.js') }}"></script>
+            src="{{ url_for('static', filename='plugins/jquery/dist/jquery.min.js') }}"></script>
     <script type="text/javascript"
-            src="{{ url_for('static', filename='pagepiling.js/jquery.pagepiling.min.js') }}"></script>
+            src="{{ url_for('static', filename='plugins/pagepiling.js/jquery.pagepiling.min.js') }}"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -134,7 +134,7 @@
     <div id="pagepiling">
         <div class="section" id="section1">
             <!-- /.col-lg-4 -->
-            <div class="col-lg-4"> </div>
+            <div class="col-lg-4"></div>
             <div class="col-lg-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
@@ -142,10 +142,14 @@
                         <h2>Tube——文档管理利器</h2>
                     </div>
                     <div class="panel-body">
-                        <p><i class="fa fa-chevron-circle-right fa-1x" aria-hidden="true"> 包含权限管理、目录排序、Markdown编辑器</i></p>
-                        <p><i class="fa fa-chevron-circle-right fa-1x" aria-hidden="true"> 包含权限管理、目录排序、Markdown编辑器</i></p>
-                        <p><i class="fa fa-chevron-circle-right fa-1x" aria-hidden="true"> 包含权限管理、目录排序、Markdown编辑器</i></p>
-                        <p><i class="fa fa-chevron-circle-right fa-1x" aria-hidden="true"> 包含权限管理、目录排序、Markdown编辑器</i></p>
+                        <p><i class="fa fa-chevron-circle-right fa-1x" aria-hidden="true"> 包含权限管理、目录排序、Markdown编辑器</i>
+                        </p>
+                        <p><i class="fa fa-chevron-circle-right fa-1x" aria-hidden="true"> 包含权限管理、目录排序、Markdown编辑器</i>
+                        </p>
+                        <p><i class="fa fa-chevron-circle-right fa-1x" aria-hidden="true"> 包含权限管理、目录排序、Markdown编辑器</i>
+                        </p>
+                        <p><i class="fa fa-chevron-circle-right fa-1x" aria-hidden="true"> 包含权限管理、目录排序、Markdown编辑器</i>
+                        </p>
                     </div>
                     <div class="panel-footer">
                         <a href="http://www.iwhgao.com" target="_blank">@ www.iwhgao.com</a>
@@ -153,13 +157,10 @@
                 </div>
                 <br/>
                 <br/>
-                <button type="button" class="btn btn-primary btn-lg">登录</button>
+                <button type="button" class="btn btn-primary btn-lg"  onclick=javascript:location.href='/login'>登录</button>
                 <span>|</span>
-                <button type="button" class="btn btn-primary btn-lg">注册</button>
+                <button type="button" class="btn btn-primary btn-lg"  onclick=javascript:location.href='/register'>注册</button>
             </div>
-            <div class="col-lg-4"> </div>
-
-
         </div>
         <div class="section" id="section2">
         </div>

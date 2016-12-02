@@ -19,6 +19,7 @@ from jinja2 import TemplateNotFound
 from sqlalchemy.exc import ProgrammingError
 from hashlib import md5
 from .. import db
+from ..config import config
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -106,13 +107,13 @@ def install_step2(pwd, email):
 		# 创建组
 		dt = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 		cmd = 'INSERT INTO `tube_group`(`parent_group_id`, `group_name`, `group_description`, `create_time`) VALUES (%d, "%s", "%s", "%s");' % (
-			-1, 'admin', 'admin', dt)
+			0, 'admin', 'admin', dt)
 		db.session.execute(cmd)
 		db.session.commit()
 
 		# 创建用户
 		m = md5()
-		m.update(pwd + "just a secret!")
+		m.update(pwd + config['default'].SECRET_KEY)
 		encode_pwd = m.hexdigest()
 		cmd = 'INSERT INTO `tube_user`(`user_code`, `user_name`, `group_id`, `password`, `email`, `create_time`, `login_time`, `last_login_time`, `login_times`) VALUES ("superadmin", "%s", 1, "%s", "%s", "%s", "%s", 1)' % (
 			"超级管理员", email, encode_pwd, dt, dt, dt)
