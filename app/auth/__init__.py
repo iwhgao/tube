@@ -10,3 +10,7 @@
 @file: __init__.py.py
 @time: 2016/10/31 14:22
 """
+
+from flask import Blueprint
+
+auth = Blueprint('auth', __name__)

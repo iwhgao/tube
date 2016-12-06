@@ -51,4 +51,8 @@ def create_app(config_name):
     from .register import register as register_blueprint
     app.register_blueprint(register_blueprint, url_prefix='/register')
 
+    # 登录页面
+    from .auth import auth as auth_blueprint
+    app.register_blueprint(auth_blueprint, url_prefix='/login')
+
     return app
