@@ -37,9 +37,10 @@ def execute_sql_file(sql_file_path):
 		line = f.read()
 		f.close()
 		db.session.execute(line)
-		db.session.commit()
 	except ProgrammingError, e:
 		db.session.rollback()
+	else:
+		db.session.commit()
 	finally:
 		db.session.close()
 
@@ -109,7 +110,6 @@ def install_step2(pwd, email):
 		cmd = 'INSERT INTO `tube_group`(`parent_group_id`, `group_name`, `group_description`, `create_time`) VALUES (%d, "%s", "%s", "%s");' % (
 			0, 'admin', 'admin', dt)
 		db.session.execute(cmd)
-		db.session.commit()
 
 		# 创建用户
 		m = md5()
@@ -118,10 +118,10 @@ def install_step2(pwd, email):
 		cmd = 'INSERT INTO `tube_user`(`user_code`, `user_name`, `group_id`, `password`, `email`, `create_time`, `login_time`, `last_login_time`, `login_times`) VALUES ("superadmin", "%s", 1, "%s", "%s", "%s", "%s", 1)' % (
 			"超级管理员", email, encode_pwd, dt, dt, dt)
 		db.session.execute(cmd)
-		db.session.commit()
-
 	except ProgrammingError, e:
 		db.session.rollback()
+	else:
+		db.session.commit()
 	finally:
 		db.session.close()
 

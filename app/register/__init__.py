@@ -52,10 +52,11 @@ def start_register():
 			user_code, user_code, encode_pwd, email, dt, dt, dt)
 
 		db.session.execute(cmd)
-		db.session.commit()
 	except ProgrammingError, e:
 		db.session.rollback()
 		return render_template('register/error.html')
+	else:
+		db.session.commit()
 	finally:
 		db.session.close()
 

@@ -33,7 +33,9 @@ def execute_sql_file(sql_file_path):
 		f.close()
 		db.session.execute(line)
 	except ProgrammingError, e:
-		print 'dddd %s' % e
+		db.session.rollback()
+	finally:
+		db.session.close()
 
 
 @home.route('/', methods=['GET', 'POST'])
