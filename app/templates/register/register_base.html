@@ -7,6 +7,10 @@
 
         <link rel="shortcut icon" href="{{ url_for('static', filename='imgs/favicon.ico') }}">
 
+        <!-- jQuery -->
+        <script src="{{ url_for('static', filename='plugins/jquery/dist/jquery.min.js') }}"></script>
+
+
         <!-- Bootstrap Core CSS -->
         <link href="{{ url_for('static', filename='plugins/bootstrap/css/bootstrap.min.css') }}"
               rel="stylesheet">
@@ -32,9 +36,6 @@
 <body class="login-layout">
 {% block body %}
     {% block body_content %} {% endblock %}
-    <!-- jQuery -->
-    <script src="{{ url_for('static', filename='plugins/jquery/dist/jquery.min.js') }}"></script>
-
     <!-- Bootstrap Core JavaScript -->
     <script src="{{ url_for('static', filename='plugins/bootstrap/js/bootstrap.min.js') }}"></script>
     {% block footer_script %}{% endblock %}

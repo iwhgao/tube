@@ -1,5 +1,67 @@
 {% extends "register/register_base.html" %}
 {% block title %}注册{% endblock %}
+{% block header_script %}
+    <script language="javascript" type="text/javascript">
+
+        var code; //在全局 定义验证码
+        var code2; //在全局 定义验证码
+        function createCode() {
+            code = "";
+            var checkCode = document.getElementById("checkCode");
+
+            function RndNum(n) {
+                var rnd = "";
+                for (var i = 0; i < n; i++)
+                    rnd += Math.floor(Math.random() * 10);
+                return rnd;
+            }
+
+            var num = RndNum(2);
+            var num2 = RndNum(2);
+
+            code = num + "+" + num2 + "=";
+            code2 = parseInt(num) + parseInt(num2)
+
+            if (checkCode) {
+                checkCode.className = "code";
+                checkCode.value = code;
+            }
+
+        }
+    </script>
+    <script type="text/javascript">
+        $(function () {
+
+            $("#input1").blur(function () {
+                var inputCode = document.getElementById("input1").value;
+                if (inputCode.length <= 0) {
+                    alert("请输入验证码！");
+                }
+                else if (inputCode != code2) {
+                    alert("验证码输入错误！");
+                    createCode(); //刷新验证码
+                }
+            });
+        })
+    </script>
+
+    <style type="text/css">
+        .code {
+            font-family: Arial;
+            font-style: italic;
+            color: Red;
+            border: 0;
+            padding: 2px 3px;
+            letter-spacing: 3px;
+            font-weight: bolder;
+        }
+
+        .unchanged {
+            border: 0;
+        }
+    </style>
+
+{% endblock %}
 
 {% block body_content %}
     <div class="main-container">
@@ -30,14 +92,16 @@
                                             <fieldset>
                                                 <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="email" name="email" class="form-control" placeholder="邮箱">
+															<input type="email" name="email" class="form-control"
+                                                                   placeholder="邮箱">
 															<i class="ace-icon fa fa-envelope"></i>
 														</span>
                                                 </label>
 
                                                 <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" name="username" class="form-control" placeholder="用户名">
+															<input type="text" name="username" class="form-control"
+                                                                   placeholder="用户名">
 															<i class="ace-icon fa fa-user"></i>
 														</span>
                                                 </label>
@@ -57,15 +121,26 @@
 															<i class="ace-icon fa fa-retweet"></i>
 														</span>
                                                 </label>
+                                                <label class="block clearfix">
+														<span class="block input-icon input-icon-right">
+                                                    <input type="text" onclick="createCode()" readonly="readonly"
+                                                           id="checkCode" class="unchanged"
+                                                           placeholder="点击刷新"
+                                                           style="width: 105px;background: #660099"/>
+                                                    <input type="text" id="input1" align="right"
+                                                           placeholder="输入算数结果"/>
+                                                            </span>
+                                                </label>
 
+                                                <!--
                                                 <label class="block">
                                                     <input type="checkbox" class="ace">
                                                     <span class="lbl">
 															接受
-															<a href="#">用户协议</a>
-														</span>
+		<a href="#" id="licence" rel="popover" data-content="为我的网站创建一个提示框如此简单！"
+           data-original-title="Bootstrap弹出框">用户协议</a>
                                                 </label>
-
+                                                -->
                                                 <div class="space-24"></div>
 
                                                 <div class="clearfix">
