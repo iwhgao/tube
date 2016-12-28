@@ -43,6 +43,10 @@ def create_app(config_name):
     from .admin import admin as admin_blueprint
     app.register_blueprint(admin_blueprint, url_prefix='/admin')
 
+    # 用户个人页面
+    from .user import user as user_blueprint
+    app.register_blueprint(user_blueprint, url_prefix='/user')
+
     # 安装页面
     from .install import install as install_blueprint
     app.register_blueprint(install_blueprint, url_prefix='/install')
